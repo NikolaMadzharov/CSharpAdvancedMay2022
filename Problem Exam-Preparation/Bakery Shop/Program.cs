@@ -86,7 +86,9 @@ namespace Bakery_Shop
             if (water.Count > 0)
             {
                 Console.Write("Water left: ");
-                Console.Write(String.Join(" ", water));
+                Console.Write(String.Join(", ", water));
+                 Console.WriteLine();
+
             }
             else
             {
@@ -96,6 +98,7 @@ namespace Bakery_Shop
             {
                 Console.Write("Flour left: ");
                 Console.Write(String.Join(", ",flour));
+               Console.WriteLine();
             }
             else
             {
