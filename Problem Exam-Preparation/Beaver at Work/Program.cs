@@ -10,7 +10,7 @@ namespace Survivor
         {
             int n = int.Parse(Console.ReadLine());
             char[,] matrix = new char[n, n];
-            Queue<char> queue = new Queue<char>();
+            List<char> woodBranches = new List<char>();
             int woodBranchCount = 0;
             int beaverRow = -10;
             int beaverCol = -10;
@@ -38,8 +38,8 @@ namespace Survivor
             {
                 if (woodBranchCount.Equals(0))
                 {
-                    Console.WriteLine("The Beaver successfully collect {numberOfbranches} wood branches:");
-                    Console.WriteLine(String.Join(", ", queue));
+                    Console.WriteLine($"The Beaver successfully collect {woodBranches.Count} wood branches: {string.Join(", ",woodBranches)}.");
+                    
                     break;
                 }
 
@@ -50,7 +50,7 @@ namespace Survivor
                     {
                         if (char.IsLower(matrix[beaverRow - 1, beaverCol]))
                         {
-                            queue.Enqueue(matrix[beaverRow - 1, beaverCol]);
+                            woodBranches.Add(matrix[beaverRow - 1, beaverCol]);
                             woodBranchCount--;
                             matrix[beaverRow, beaverCol] = '-';
                             matrix[beaverRow - 1, beaverCol] = 'B';
@@ -76,7 +76,7 @@ namespace Survivor
                     }
                     else
                     {
-                        queue.Dequeue();
+                        woodBranches.RemoveAt(woodBranches.Count - 1);
                     }
 
 
@@ -88,7 +88,7 @@ namespace Survivor
                     {
                         if (char.IsLower(matrix[beaverRow + 1, beaverCol]))
                         {
-                            queue.Enqueue(matrix[beaverRow + 1, beaverCol]);
+                            woodBranches.Add(matrix[beaverRow + 1, beaverCol]);
                             woodBranchCount--;
                             matrix[beaverRow, beaverCol] = '-';
                             matrix[beaverRow + 1, beaverCol] = 'B';
@@ -114,7 +114,7 @@ namespace Survivor
                     }
                     else
                     {
-                        queue.Dequeue();
+                        woodBranches.RemoveAt(woodBranches.Count - 1);
                     }
                 }
                 else if (cmd == "right")
@@ -123,7 +123,7 @@ namespace Survivor
                     {
                         if (char.IsLower(matrix[beaverRow, beaverCol + 1]))
                         {
-                            queue.Enqueue(matrix[beaverRow, beaverCol + 1]);
+                            woodBranches.Add(matrix[beaverRow, beaverCol + 1]);
                             woodBranchCount--;
                             matrix[beaverRow, beaverCol] = '-';
                             matrix[beaverRow, beaverCol + 1] = 'B';
@@ -151,7 +151,7 @@ namespace Survivor
                     }
                     else
                     {
-                        queue.Dequeue();
+                        woodBranches.RemoveAt(woodBranches.Count - 1);
                     }
                 }
                 else if (cmd == "left")
@@ -161,7 +161,7 @@ namespace Survivor
                     {
                         if (char.IsLower(matrix[beaverRow, beaverCol - 1]))
                         {
-                            queue.Enqueue(matrix[beaverRow, beaverCol - 1]);
+                            woodBranches.Add(matrix[beaverRow, beaverCol - 1]);
                             woodBranchCount--;
                             matrix[beaverRow, beaverCol] = '-';
                             matrix[beaverRow, beaverCol - 1] = 'B';
@@ -187,7 +187,7 @@ namespace Survivor
                     }
                     else
                     {
-                        queue.Dequeue();
+                        woodBranches.RemoveAt(woodBranches.Count - 1);
                     }
 
 
@@ -197,16 +197,18 @@ namespace Survivor
 
                 cmd = Console.ReadLine();
             }
-            if (queue.Count == 0)
+
+            if (woodBranchCount>0)
             {
                 Console.WriteLine($"The Beaver failed to collect every wood branch. There are {woodBranchCount} branches left.");
             }
-           
+            
+            
             for (int i = 0; i < n; i++)
             {
                 for (int z = 0; z < n; z++)
                 {
-                    Console.Write(matrix[i,z]+" ");
+                    Console.Write(matrix[i,z]+" ",StringSplitOptions.RemoveEmptyEntries);
                 }
                 Console.WriteLine();
             }
