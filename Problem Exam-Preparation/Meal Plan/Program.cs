@@ -50,10 +50,7 @@ namespace Meal_Plan
                         meals.Dequeue();
                     }
                 }
-                if (currentCalories==0)
-                {
-                    caloriesPerDay.Pop();
-                }
+               
 
             }
 
