@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Food Finder", "Food Finder\Food Finder.csproj", "{6BA89570-8343-4252-9F04-B716E3480785}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Re-Volt", "Re-Volt\Re-Volt.csproj", "{3BC46EF3-345A-4706-87B5-3151AB8C231D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6BA89570-8343-4252-9F04-B716E3480785}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BA89570-8343-4252-9F04-B716E3480785}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BA89570-8343-4252-9F04-B716E3480785}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BA89570-8343-4252-9F04-B716E3480785}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3BC46EF3-345A-4706-87B5-3151AB8C231D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BC46EF3-345A-4706-87B5-3151AB8C231D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BC46EF3-345A-4706-87B5-3151AB8C231D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BC46EF3-345A-4706-87B5-3151AB8C231D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {058B841E-03D7-441F-A7DC-0D5D1FD26571}
+	EndGlobalSection
+EndGlobal
