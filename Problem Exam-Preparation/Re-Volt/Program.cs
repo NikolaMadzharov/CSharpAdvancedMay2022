@@ -57,12 +57,7 @@ namespace Re_Volt
                 {
                     move(0, -1);
                 }
-                //if (hasHeWon(matrix) == true)
-                //{
-                //    Console.WriteLine("Player won");
-                //    PrintingMatix(matrix);
-                //    return;
-                //}
+               
             }
             Console.WriteLine("Player lost!");
             PrintingMatix(matrix);
@@ -179,9 +174,6 @@ namespace Re_Volt
             return row >= 0 && row < matrix.GetLength(0) &&
                   col >= 0 && col < matrix.GetLength(1);
         }
-        static bool hasHeWon(char[,] matrix)
-        {
-            return matrix[playerRow, playerCol] == 'F';
-        }
+       
     }
 }
