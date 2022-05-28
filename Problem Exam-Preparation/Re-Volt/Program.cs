@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace Re_Volt
@@ -36,11 +36,14 @@ namespace Re_Volt
                     }
                 }
             }
-            string cmd = Console.ReadLine();
-            while (commandsToRead > 0)
+          
+
+            for (int i = 0; i < commandsToRead; i++)
             {
-                commandsToRead--;
+                string cmd = Console.ReadLine();
                 lastDirection = cmd;
+
+                
                 if (cmd == "up")
                 {
                     move(-1, 0);
@@ -57,13 +60,20 @@ namespace Re_Volt
                 {
                     move(0, -1);
                 }
-               
             }
-            Console.WriteLine("Player lost!");
-            PrintingMatix(matrix);
-
-
+            if (commandsToRead>0)
+            {
+                Console.WriteLine("Player lost!");
+                PrintingMatix(matrix);
+            }
+           
         }
+     
+	
+	
+	
+
+	
 
         static void PrintingMatix(char[,] matrix)
         {
@@ -71,7 +81,7 @@ namespace Re_Volt
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    Console.Write(matrix[i, j] + " ", StringSplitOptions.RemoveEmptyEntries);
+                    Console.Write(matrix[i, j] );
                 }
                 Console.WriteLine();
             }
@@ -85,7 +95,7 @@ namespace Re_Volt
                 if (lastDirection == "up")
                 {
                     matrix[matrix.GetLength(0) - 1, playerCol] = 'f';
-                    playerRow = matrix.GetLength(0);
+                    playerRow = matrix.GetLength(0)-1;
                     return;
                 }
                 else if (lastDirection == "down")
@@ -103,77 +113,104 @@ namespace Re_Volt
                 else if (lastDirection == "left")
                 {
                     matrix[playerRow, matrix.GetLength(1) - 1] = 'f';
-                    playerCol = matrix.GetLength(1);
+                    playerCol = matrix.GetLength(1)-1;
                     return;
 
                 }
-            }
-          
 
+            }
+            matrix[playerRow , playerCol] = '-';
             playerRow += row;
             playerCol += col;
+            if (hasHewon(matrix))
+            {
+                Console.WriteLine("Player won!");
+                matrix[playerRow, playerCol] = 'f';
+                PrintingMatix(matrix);
+                return;
+            }
 
             if (lastDirection == "up")
             {
+                ;
                 if (matrix[playerRow, playerCol] == 'B')
                 {
-                    matrix[playerRow - 1, playerCol] = 'f';
+                  
                     playerRow--;
+                    
                 }
                 else if (matrix[playerRow, playerCol] == 'T')
                 {
-                    matrix[playerRow + 1, playerCol] = 'f';
+                    
                     playerRow++;
+                    
                 }
             }
             else if (lastDirection == "down")
             {
+              
                 if (matrix[playerRow, playerCol] == 'B')
                 {
-                    matrix[playerRow + 1, playerCol] = 'f';
+                    
                     playerRow++;
+                    
                 }
                 else if (matrix[playerRow, playerCol] == 'T')
                 {
-                    matrix[playerRow - 1, playerCol] = 'f';
+                    
                     playerRow--;
+                    
                 }
+               
             }
             else if (lastDirection == "right")
             {
                 if (matrix[playerRow, playerCol] == 'B')
                 {
-                    matrix[playerRow, playerCol + 1] = 'f';
+                   
                     playerCol++;
+                    
                 }
                 else if (matrix[playerRow, playerCol] == 'T')
                 {
-                    matrix[playerRow, playerCol - 1] = 'F';
+                   
                     playerCol--;
+                    
                 }
             }
             else if (lastDirection == "left")
             {
+               
                 if (matrix[playerRow, playerCol] == 'B')
                 {
-                    matrix[playerRow, playerCol - 1] = 'f';
+                    
                     playerCol--;
+                    
                 }
                 else if (matrix[playerRow, playerCol] == 'T')
                 {
-                    matrix[playerRow, playerCol + 1] = 'f';
+                   
                     playerCol++;
                 }
+               
             }
+            matrix[playerRow , playerCol] = 'f';
         }
 
-
+        static bool hasHewon(char[,] matrix)
+        {
+            if (matrix[playerRow,playerCol]=='F')
+            {
+                return true;
+            }
+            return false;
+        }
 
         static bool hasValidCordinates(int row, int col)
         {
             return row >= 0 && row < matrix.GetLength(0) &&
                   col >= 0 && col < matrix.GetLength(1);
         }
-       
+
     }
 }
