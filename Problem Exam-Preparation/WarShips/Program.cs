@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace WarShips
@@ -12,15 +12,16 @@ namespace WarShips
         private static char[,] matrix;
         private static int playerShips1;
         private static int playerShips2;
-        private static int totalShips;
+        private static int leftShips;
+        private static int startingShips;
         static void Main(string[] args)
         {
-           
+
 
             playerShips1 = 0;
             playerShips2 = 0;
 
-            totalShips = playerShips1+playerShips2; 
+            
             int size = int.Parse(Console.ReadLine());
 
             string[] input = Console.ReadLine().Split(',', StringSplitOptions.RemoveEmptyEntries);
@@ -28,23 +29,25 @@ namespace WarShips
 
             for (int row = 0; row < matrix.GetLength(0); row++)
             {
-                char[] input2 = Console.ReadLine().ToCharArray();
+                char[] input2 = Console.ReadLine().Split().Select(char.Parse).ToArray();
                 for (int col = 0; col < matrix.GetLength(1); col++)
                 {
                     matrix[row, col] = input2[col];
-                    if (matrix[row,col]=='<')
+                    if (matrix[row, col] == '<')
                     {
                         playerShips1++;
-                        
+
                     }
-                    if (matrix[row,col]=='>')
+                    if (matrix[row, col] == '>')
                     {
                         playerShips2++;
-                        
+
                     }
-                    
+
                 }
             }
+            leftShips = playerShips1 + playerShips2;
+            startingShips=leftShips;
 
             for (int i = 0; i < input.Length; i++)
             {
@@ -52,11 +55,26 @@ namespace WarShips
                 int row = coordinate[0];
                 int col = coordinate[1];
 
-               
+
                 war(row, col);
             }
-            Console.WriteLine($"It's a draw! Player One has {playerShips1} ships left. Player Two has {playerShips2} ships left.");
-            printingMatrix(matrix);
+            if (playerShips1 <= 0)
+            {
+                Console.WriteLine($"Player Two has won the game! {startingShips - leftShips} ships have been sunk in the battle.");
+                
+                Environment.Exit(0);
+            }
+            if (playerShips2 <= 0)
+            {
+                Console.WriteLine($"Player One has won the game! {startingShips - leftShips} ships have been sunk in the battle.");
+                
+                Environment.Exit(0);
+            }
+            
+                Console.WriteLine($"It's a draw! Player One has {playerShips1} ships left. Player Two has {playerShips2} ships left.");
+               
+            
+           
 
 
 
@@ -68,7 +86,7 @@ namespace WarShips
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    Console.Write(matrix[i,j]);
+                    Console.Write(matrix[i, j]);
                 }
                 Console.WriteLine();
             }
@@ -78,171 +96,171 @@ namespace WarShips
             return row >= 0 && row < matrix.GetLength(0) &&
                   col >= 0 && col < matrix.GetLength(1);
         }
-        static void war(int row,int col)
+        static void war(int row, int col)
         {
 
-            if (!hasValidCordinates(row,col))
+            if (!hasValidCordinates(row, col))
             {
                 return;
             }
-            if (playerShips1<0)
+            if (playerShips1 <= 0)
             {
-                Console.WriteLine($"Player Two has won the game! {totalShips} ships have been sunk in the battle.");
-                printingMatrix(matrix);
+                Console.WriteLine($"Player Two has won the game! {startingShips-leftShips} ships have been sunk in the battle.");
+                
                 Environment.Exit(0);
             }
-            if (playerShips2 < 0)
+            if (playerShips2 <= 0)
             {
-                Console.WriteLine($"Player One has won the game! {totalShips} ships have been sunk in the battle.");
-                printingMatrix(matrix);
+                Console.WriteLine($"Player One has won the game! {startingShips-leftShips} ships have been sunk in the battle.");
+                
                 Environment.Exit(0);
             }
 
 
-            if (matrix[row,col]=='>')
+            if (matrix[row, col] == '>')
             {
                 playerShips2--;
-                totalShips--;
+                leftShips--;
                 matrix[row, col] = 'X';
             }
-           else if (matrix[row,col]=='<')
+            else if (matrix[row, col] == '<')
             {
                 playerShips1--;
-                totalShips--;
+                leftShips--;
                 matrix[row, col] = 'X';
             }
-           else if (matrix[row,col]=='#')
+            else if (matrix[row, col] == '#')
             {
-               explosion(row, col);
+                explosion(row, col);
             }
-           
+
         }
-        static void explosion(int row ,int col)
+        static void explosion(int row, int col)
         {
             //up
-            if (hasValidCordinates(row-1,col))
+            if (hasValidCordinates(row - 1, col))
             {
-                if (matrix[row-1,col]=='<')
+                if (matrix[row - 1, col] == '<')
                 {
                     playerShips1--;
-                    totalShips--;
+                    leftShips--;
                 }
-                else if(matrix[row-1,col]=='>')
+                else if (matrix[row - 1, col] == '>')
                 {
                     playerShips2--;
-                    totalShips--;
+                    leftShips--;
                 }
                 matrix[row - 1, col] = 'X';
 
             }
             //down
-            if (hasValidCordinates(row+1,col))
+            if (hasValidCordinates(row + 1, col))
             {
-                if (matrix[row +1, col] == '<')
+                if (matrix[row + 1, col] == '<')
                 {
                     playerShips1--;
-                    totalShips--;
+                    leftShips--;
                 }
                 else if (matrix[row + 1, col] == '>')
                 {
                     playerShips2--;
-                    totalShips--;
+                    leftShips--;
                 }
-                matrix[row +1, col] = 'X';
+                matrix[row + 1, col] = 'X';
             }
             // right
-            if (hasValidCordinates(row,col+1))
+            if (hasValidCordinates(row, col + 1))
             {
-                if (matrix[row,col+1]=='<')
+                if (matrix[row, col + 1] == '<')
                 {
                     playerShips1--;
-                    totalShips--;
+                    leftShips--;
                 }
-                else if (matrix[row,col+1]=='>')
+                else if (matrix[row, col + 1] == '>')
                 {
                     playerShips2--;
-                    totalShips--;
+                    leftShips--;
                 }
                 matrix[row, col + 1] = 'X';
             }
             // left
-            if (hasValidCordinates(row, col -1))
+            if (hasValidCordinates(row, col - 1))
             {
                 if (matrix[row, col - 1] == '<')
                 {
                     playerShips1--;
-                    totalShips--;
+                    leftShips--;
                 }
                 else if (matrix[row, col - 1] == '>')
                 {
                     playerShips2--;
-                    totalShips--;
+                    leftShips--;
                 }
                 matrix[row, col - 1] = 'X';
             }
             // up left
-            if (hasValidCordinates(row-1,col-1))
+            if (hasValidCordinates(row - 1, col - 1))
             {
-                if (matrix[row-1,col-1]=='<')
+                if (matrix[row - 1, col - 1] == '<')
                 {
                     playerShips1--;
-                    totalShips--;
+                    leftShips--;
                 }
                 else if (matrix[row - 1, col - 1] == '>')
                 {
                     playerShips2--;
-                    totalShips--;
+                    leftShips--;
                 }
-                matrix[row - 1, col - 1] ='X';
+                matrix[row - 1, col - 1] = 'X';
             }
             // up right
-            if (hasValidCordinates(row-1,col+1))
+            if (hasValidCordinates(row - 1, col + 1))
             {
-                if (matrix[row-1,col+1]=='<')
+                if (matrix[row - 1, col + 1] == '<')
                 {
                     playerShips1--;
-                    totalShips--;
+                    leftShips--;
                 }
-                else if (matrix[row -1 , col + 1] == '>')
+                else if (matrix[row - 1, col + 1] == '>')
                 {
                     playerShips2--;
-                    totalShips--;
+                    leftShips--;
                 }
-                matrix[row -1 , col + 1] = 'X';
+                matrix[row - 1, col + 1] = 'X';
             }
             // down right
-            if (hasValidCordinates(row+1,col+1))
+            if (hasValidCordinates(row + 1, col + 1))
             {
-                if (matrix[row +1, col + 1] == '<')
+                if (matrix[row + 1, col + 1] == '<')
                 {
                     playerShips1--;
-                    totalShips--;
+                    leftShips--;
                 }
                 else if (matrix[row + 1, col + 1] == '>')
                 {
                     playerShips2--;
-                    totalShips--;
+                    leftShips--;
                 }
-                matrix[row +1, col + 1] = 'X';
+                matrix[row + 1, col + 1] = 'X';
             }
-            if (hasValidCordinates(row+1,col-1))
+            if (hasValidCordinates(row + 1, col - 1))
             {
-                if (matrix[row +1, col - 1] == '<')
+                if (matrix[row + 1, col - 1] == '<')
                 {
                     playerShips1--;
-                    totalShips--;
+                    leftShips--;
                 }
                 else if (matrix[row + 1, col - 1] == '>')
                 {
                     playerShips2--;
-                    totalShips--;
+                    leftShips--;
                 }
                 matrix[row + 1, col - 1] = 'X';
             }
 
-           
+
         }
     }
 
-  
+
 }
