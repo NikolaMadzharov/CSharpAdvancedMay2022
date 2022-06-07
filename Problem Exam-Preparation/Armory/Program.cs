@@ -1,268 +1,164 @@
+
+
 using System;
 
-namespace examPreparation
+namespace _02._Armory
 {
     internal class Program
     {
-        private static char[,] matrix;
-
-        private static int playerRow;
-        private static int playerCol;
-
-        private static int firstMRow;
-        private static int firstMCol;
-
-        private static int secondMRow;
-        private static int secondMCol;
-
         private static int totalCoins;
+        private static int firstMirrorRow;
+        private static int firstMirrorCol;
 
-        private static string lastDirection;
+        private static int secondMirrorRow;
+        private static int secondMirrowCol;
 
-        private static bool isExist;
+        private static int officerRow;
+        private static int officerCol;
 
-        private static int mirrorCount;
-
+        private static char[,] matrix;
+        private static int mirrorsCount;
         static void Main(string[] args)
         {
-           
-            int size = int.Parse(Console.ReadLine());
-            matrix = new char[size,size];
-             mirrorCount = 0;
-            totalCoins = 0;
-            for (int r = 0; r < matrix.GetLength(0); r++)
+             
+          
+            
+
+            int n = int.Parse(Console.ReadLine());
+
+            matrix = new char[n, n];
+
+            for (int row = 0; row < matrix.GetLength(0); row++)
             {
-                char[] input = Console.ReadLine().ToCharArray();
-                for (int c = 0; c < matrix.GetLength(1); c++)
+                char[] input =Console.ReadLine().ToCharArray();
+
+                for (int col = 0; col < matrix.GetLength(1); col++)
                 {
-                    matrix[r, c] = input[c];
-                    if (matrix[r,c]=='M')
+                    matrix[row, col] = input[col];
+
+                    if (matrix[row, col] == 'M')
                     {
-                        if (mirrorCount==0)
+                        if (mirrorsCount == 0)
                         {
-                            firstMRow = r;
-                            firstMCol = c;
-                            mirrorCount++;
+                            firstMirrorRow = row;
+                            firstMirrorCol = col;
+                            mirrorsCount++;
                         }
-                        secondMRow = r;
-                        secondMCol = c;
-                       
+
+                        secondMirrorRow = row;
+                        secondMirrowCol = col;
                     }
-                    if (matrix[r,c]=='A')
+
+                    if (matrix[row, col] == 'A')
                     {
-                        playerRow = r;
-                        playerCol = c;
+                        officerRow = row;
+                        officerCol = col;
                     }
                 }
             }
-            while (!isExist)
+
+            while (true)
             {
-                string cmd = Console.ReadLine();
-                lastDirection = cmd;
+                string cmd  =  Console.ReadLine();
+
+               
                 if (cmd == "up")
                 {
-                    move(-1, 0);
+
+                    Movement(-1, 0);
+
                 }
                 else if (cmd == "down")
                 {
-                    move(1, 0);
+                    Movement(1, 0);
                 }
-                else if (cmd == "right")
+                else if (cmd=="right")
                 {
-                    move(0, 1);
+                    Movement(0, 1);
+
                 }
-                else if (cmd == "left")
+                else if (cmd=="left")
                 {
-                    move(0, -1);
+                   Movement(0,-1); 
                 }
 
-                
             }
 
         }
-        static void printingMatrix(char[,] matrix)
+       
+        public static void Movement(int row, int col)
+        
         {
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            matrix[officerRow, officerCol] = '-';
+            officerRow += row;
+            officerCol += col;
+            if (isInMatrix(officerRow,officerCol))
             {
-                for (int z = 0; z < matrix.GetLength(1); z++)
+                if (char.IsDigit(matrix[officerRow,officerCol]))
                 {
-                    Console.Write(matrix[i,z]);
+                    totalCoins += int.Parse(matrix[officerRow, officerCol].ToString());
+                    
+
+                }
+                else if (mirrorsCount>0)
+                {
+                     if (matrix[officerRow, officerCol] == matrix[firstMirrorRow, firstMirrorCol])
+                    {
+                        officerRow = secondMirrorRow;
+                        officerCol = secondMirrowCol;
+                        matrix[firstMirrorCol, firstMirrorCol] = '-';
+                    }
+                    else if (matrix[officerRow, officerCol] == matrix[secondMirrorRow, secondMirrowCol])
+                    {
+                        officerRow = firstMirrorRow;
+                        officerCol = firstMirrorCol;
+                        matrix[secondMirrorRow, secondMirrowCol] = '-';
+                    }
+
+                }
+               
+               
+
+            }
+            else if (!isInMatrix(officerRow,officerCol))
+            {
+                Console.WriteLine("I do not need more swords!");
+                Console.WriteLine($"The king paid {totalCoins} gold coins.");
+                pringingMatrix(matrix);
+                Environment.Exit(0);
+            }
+           
+           
+            matrix[officerRow, officerCol] = 'A';
+            if (totalCoins>=65)
+            {
+                Console.WriteLine("Very nice swords, I will come back for more!");
+                Console.WriteLine($"The king paid {totalCoins} gold coins.");
+                pringingMatrix(matrix);
+                Environment.Exit(0);
+            }
+            
+
+        }
+        public static bool isInMatrix(int row ,int col)
+        {
+            return row>=0 && row<= matrix.GetLength(0)&& col>=0 && col<= matrix.GetLength(1);
+        }
+
+        public static void pringingMatrix(char[,] matrix)
+        {
+            for (int r = 0; r < matrix.GetLength(0); r++)
+            {
+                for (int c = 0; c < matrix.GetLength(1); c++)
+                {
+                    Console.Write(matrix[r,c]);
                 }
                 Console.WriteLine();
             }
         }
-        static void move(int row, int col)
-        {
-            
-            matrix[playerRow, playerCol] = '-';
-            playerRow += row;
-            playerCol += col;
-
-            if (lastDirection == "up")
-            {
-                if (hasValidCordinates(playerRow, playerCol))
-                {
-                    if (char.IsDigit(matrix[playerRow, playerCol]))
-                    {
-                        totalCoins += int.Parse(matrix[playerRow, playerCol].ToString());
-                    }
-                    if ( mirrorCount>0)
-                    {
-                        if (matrix[playerRow, playerCol] == matrix[firstMRow, firstMCol])
-                        {
-
-                            playerRow = secondMRow;
-                            playerCol = secondMCol;
-                            matrix[firstMRow, firstMCol] = '-';
-                        }
-                        else if (matrix[playerRow, playerCol] == matrix[secondMRow, secondMCol])
-                        {
-
-                            playerRow = firstMRow;
-                            playerCol = firstMCol;
-                            matrix[secondMRow, secondMCol] = '-';
-                        }
-                    }
-                    
-                }
-                else
-                {
-                    Console.WriteLine("I do not need more swords!");
-                    Console.WriteLine($"The king paid {totalCoins} gold coins.");
-                    printingMatrix(matrix);
-                    isExist = false;
-                    Environment.Exit(0);
-
-                }
-            }
-           else if (lastDirection == "down")
-            {
-                if (hasValidCordinates(playerRow, playerCol))
-                {
-                    if (char.IsDigit(matrix[playerRow, playerCol]))
-                    {
-                        totalCoins += int.Parse(matrix[playerRow, playerCol].ToString());
-                    }
-                    if ( mirrorCount>0)
-                    {
-                        if (matrix[playerRow, playerCol] == matrix[firstMRow, firstMCol])
-                        {
-
-                            playerRow = secondMRow;
-                            playerCol = secondMCol;
-                            matrix[firstMRow, firstMCol] = '-';
-                        }
-                        else if (matrix[playerRow, playerCol] == matrix[secondMRow, secondMCol])
-                        {
-
-                            playerRow = firstMRow;
-                            playerCol = firstMCol;
-                            matrix[secondMRow, secondMCol] = '-';
-                        }
-                    }
-                   
-                }
-                else
-                {
-                    Console.WriteLine("I do not need more swords!");
-                    Console.WriteLine($"The king paid {totalCoins} gold coins.");
-                    printingMatrix(matrix);
-                    isExist = false;
-                    Environment.Exit(0);
-
-                }
-            }
-           else if (lastDirection == "right")
-            {
-                if (hasValidCordinates(playerRow, playerCol))
-                {
-                    if (char.IsDigit(matrix[playerRow, playerCol]))
-                    {
-                        totalCoins += int.Parse(matrix[playerRow, playerCol].ToString());
-                    }
-                    if (mirrorCount > 0)
-                    {
-                        if (matrix[playerRow, playerCol] == matrix[firstMRow, firstMCol])
-                        {
-
-                            playerRow = secondMRow;
-                            playerCol = secondMCol;
-                            matrix[firstMRow, firstMCol] = '-';
-                        }
-                        else if (matrix[playerRow, playerCol] == matrix[secondMRow, secondMCol])
-                        {
-
-                            playerRow = firstMRow;
-                            playerCol = firstMCol;
-                            matrix[secondMRow, secondMCol] = '-';
-                        }
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("I do not need more swords!");
-                    Console.WriteLine($"The king paid {totalCoins} gold coins.");
-                    printingMatrix(matrix);
-                    isExist = false;
-                    Environment.Exit(0);
-
-                }
-            }
-            else if (lastDirection == "left")
-            {
-                if (hasValidCordinates(playerRow, playerCol))
-                {
-                    if (char.IsDigit(matrix[playerRow, playerCol]))
-                    {
-                        totalCoins += int.Parse(matrix[playerRow, playerCol].ToString());
-                    }
-                    if (mirrorCount > 0)
-                    {
-                        if (matrix[playerRow, playerCol] == matrix[firstMRow, firstMCol])
-                        {
-
-                            playerRow = secondMRow;
-                            playerCol = secondMCol;
-                            matrix[firstMRow, firstMCol] = '-';
-                        }
-                        else if (matrix[playerRow, playerCol] == matrix[secondMRow, secondMCol])
-                        {
-
-                            playerRow = firstMRow;
-                            playerCol = firstMCol;
-                            matrix[secondMRow, secondMCol] = '-';
-                        }
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("I do not need more swords!");
-                    Console.WriteLine($"The king paid {totalCoins} gold coins.");
-                    printingMatrix(matrix);
-                    isExist = false;
-                    Environment.Exit(0);
-
-                }
-            }
-            matrix[playerRow, playerCol] = 'A';
-            if (totalCoins >= 65)
-            {
-                Console.WriteLine("Very nice swords, I will come back for more!");
-                Console.WriteLine($"The king paid {totalCoins} gold coins.");
-                printingMatrix(matrix);
-                isExist = false;
-                Environment.Exit(0);
-            }
 
 
 
-        }
-       
-        static bool hasValidCordinates(int row, int col)
-        {
-            return row >= 0 && row < matrix.GetLength(0) &&
-                  col >= 0 && col < matrix.GetLength(1);
-        }
     }
 }
 
