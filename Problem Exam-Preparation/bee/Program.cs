@@ -115,7 +115,7 @@ namespace Bee
                 }
                 printingaMatrix(matrix);
                 
-                Environment.Exit(0);
+               
             }
             matrix[beeRow,beeCol] = 'B';
             if (eatenFlowers>=5)
@@ -123,7 +123,7 @@ namespace Bee
                 Console.WriteLine($"Great job, the bee managed to pollinate {eatenFlowers} flowers!");
                 printingaMatrix(matrix);
                 
-                Environment.Exit(0);
+               
             }
         }
         private static bool isInMatrix(int row,int col)
