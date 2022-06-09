@@ -113,7 +113,7 @@ namespace TruffleHunter
                                 matrix[row, i] = "-";
                                 wildBoarEatenTruffles++;
                             }
-                            else if (matrix[i, col] == "B")
+                            else if (matrix[row, i] == "B")
                             {
                                 matrix[row, i] = "-";
                                 wildBoarEatenTruffles++;
