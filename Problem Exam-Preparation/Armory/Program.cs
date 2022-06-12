@@ -81,6 +81,24 @@ namespace _02._Armory
                 {
                    Movement(0,-1); 
                 }
+                
+                  else if (!isInMatrix(officerRow,officerCol))
+            {
+                Console.WriteLine("I do not need more swords!");
+                Console.WriteLine($"The king paid {totalCoins} gold coins.");
+                pringingMatrix(matrix);
+                Environment.Exit(0);
+            }
+           
+           
+            matrix[officerRow, officerCol] = 'A';
+            if (totalCoins>=65)
+            {
+                Console.WriteLine("Very nice swords, I will come back for more!");
+                Console.WriteLine($"The king paid {totalCoins} gold coins.");
+                pringingMatrix(matrix);
+                Environment.Exit(0);
+            }
 
             }
 
