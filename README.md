@@ -13,7 +13,7 @@ This repository contains my solutions for the SoftUni course [C# Advanced ](http
 ## Problem 03.Multidimensional Arrays - Lab
 👈🏻[PProblem 03.Multidimensional Arrays - Lab](https://github.com/NikolaMadzharov/CSharpAdvancedMay2022/tree/main/Problem%2003.Multidimensional%20Arrays%20-%20Lab)
 
-##Problem 04.Multidimensional Arrays - Exercise
+## Problem 04.Multidimensional Arrays - Exercise
 👈🏻[Problem 04.Multidimensional Arrays - Exercise](https://github.com/NikolaMadzharov/CSharpAdvancedMay2022/tree/main/Problem%2004.Multidimensional%20Arrays%20-%20Exercise)
 
 ## Problem 05.Sets and Dictionaries Advanced - Lab
