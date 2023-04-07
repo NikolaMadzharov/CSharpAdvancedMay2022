@@ -1,8 +1,9 @@
-![C__Advanced](https://user-images.githubusercontent.com/89745007/230508113-527de3de-eaab-4da3-bff0-eb42a58024b1.jpg)
+![C# OOP Advanced](https://user-images.githubusercontent.com/89745007/230681534-4975c173-ef8f-4806-a7e3-6364fddaf799.png)
+
 
 
 # CSharpAdvancedMay2022
-This repository contains my solutions for the SoftUni course [C# Advanced ](https://softuni.bg/courses/csharp-advanced)
+This repository contains my solutions for the SoftUni course [C# OOP ](https://softuni.bg/trainings/3958/csharp-oop-february-2023)
 
 ## Problem 01.Stacks and Queues - Lab
 👈🏻[Problem 01.Stacks and Queues - Lab](https://github.com/NikolaMadzharov/CSharpAdvancedMay2022/tree/main/Problem%2001.Stacks%20and%20Queues%20-%20Lab)
