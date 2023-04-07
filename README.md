@@ -2,7 +2,7 @@
 
 
 
-# CSharpAdvancedMay2022
+# CSharpOopMay2022
 This repository contains my solutions for the SoftUni course [C# OOP ](https://softuni.bg/trainings/3958/csharp-oop-february-2023)
 
 ## Problem 01.Stacks and Queues - Lab
